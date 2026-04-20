@@ -1,0 +1,60 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 2618 >>
+stream
+BT /F1 16 Tf 54 752 Td (Instruction Sheet 4: Detecting Conservation Laws \(Unsupervised Learning\)) Tj ET
+BT /F1 13 Tf 54 714 Td (Learning goal) Tj ET
+BT /F1 11 Tf 54 696 Td (Use an unsupervised neural-network workflow to detect low-dimensional invariant structure) Tj ET
+BT /F1 11 Tf 54 682 Td (associated with conservation laws from trajectory/state data.) Tj ET
+BT /F1 13 Tf 54 660 Td (Where to work in this repo) Tj ET
+BT /F1 11 Tf 54 642 Td (? Notebook: `Detecting-conservation-laws/Unsupervised_ML_Detecting-conservation-laws.ipynb`) Tj ET
+BT /F1 11 Tf 54 628 Td (? Input data: `Detecting-conservation-laws/harmonic_1d.txt`) Tj ET
+BT /F1 13 Tf 54 606 Td (Physics context) Tj ET
+BT /F1 11 Tf 54 588 Td (Conserved quantities constrain motion to lower-dimensional manifolds in phase space. If a) Tj ET
+BT /F1 11 Tf 54 574 Td (model learns this structure robustly, it indicates hidden or known constants of motion.) Tj ET
+BT /F1 13 Tf 54 552 Td (Step-by-step workflow) Tj ET
+BT /F1 11 Tf 54 534 Td (1. **Load and inspect the dataset** \(`harmonic_1d.txt`\) and identify state variables.) Tj ET
+BT /F1 11 Tf 54 520 Td (2. **Normalize and preprocess** features as done in the notebook.) Tj ET
+BT /F1 11 Tf 54 506 Td (3. **Apply PCA/rotations** to examine dominant variance directions.) Tj ET
+BT /F1 11 Tf 54 492 Td (4. **Train the neural network setup** over the notebook?s noise settings.) Tj ET
+BT /F1 11 Tf 54 478 Td (5. **Track diagnostic quantities** \(loss, explained variance, effective-rank style metrics\).) Tj ET
+BT /F1 11 Tf 54 464 Td (6. **Interpret outcomes as physics statements:**) Tj ET
+BT /F1 11 Tf 54 450 Td (   - evidence for conserved structure) Tj ET
+BT /F1 11 Tf 54 436 Td (   - robustness to added noise) Tj ET
+BT /F1 11 Tf 54 422 Td (   - limits of inference from finite samples) Tj ET
+BT /F1 13 Tf 54 400 Td (What to report in your solution) Tj ET
+BT /F1 11 Tf 54 382 Td (? The key diagnostic plots and their interpretation.) Tj ET
+BT /F1 11 Tf 54 368 Td (? A short statement of the inferred conservation behavior.) Tj ET
+BT /F1 11 Tf 54 354 Td (? How noise changed confidence in that inference.) Tj ET
+BT /F1 11 Tf 54 340 Td (? One potential extension \(different potential, dimensionality, or dynamical system\).) Tj ET
+BT /F1 13 Tf 54 318 Td (Suggested checks before submission) Tj ET
+BT /F1 11 Tf 54 300 Td (? Data normalization and PCA steps are applied in the documented order.) Tj ET
+BT /F1 11 Tf 54 286 Td (? Hyperparameters are recorded for reproducibility.) Tj ET
+BT /F1 11 Tf 54 272 Td (? Claims about conservation are tied to model diagnostics, not just visual impressions.) Tj ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000002748 00000 n 
+0000002874 00000 n 
+0000002931 00000 n 
+trailer
+<< /Size 6 /Root 5 0 R >>
+startxref
+2980
+%%EOF

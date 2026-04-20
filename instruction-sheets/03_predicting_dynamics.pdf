@@ -1,0 +1,66 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 2972 >>
+stream
+BT /F1 16 Tf 54 752 Td (Instruction Sheet 3: Predicting Radioactive Decay Dynamics \(Supervised + PINN\)) Tj ET
+BT /F1 13 Tf 54 714 Td (Learning goal) Tj ET
+BT /F1 11 Tf 54 696 Td (Model chained radioactive decay using two approaches:) Tj ET
+BT /F1 11 Tf 54 682 Td (1\) a direct supervised ANN fit, and) Tj ET
+BT /F1 11 Tf 54 668 Td (2\) a physics-informed neural network \(PINN\) constrained by decay ODEs.) Tj ET
+BT /F1 13 Tf 54 646 Td (Where to work in this repo) Tj ET
+BT /F1 11 Tf 54 628 Td (? Notebook \(3-isotope chain\): `Predicting-dynamics/Supervised_ML-chained-radioactive-) Tj ET
+BT /F1 11 Tf 54 614 Td (  decay.ipynb`) Tj ET
+BT /F1 11 Tf 54 600 Td (? Notebook \(many isotopes\): `Predicting-dynamics/Supervised_ML-chained-radioactive-decay-) Tj ET
+BT /F1 11 Tf 54 586 Td (  many-isotopes.ipynb`) Tj ET
+BT /F1 13 Tf 54 564 Td (Physics context) Tj ET
+BT /F1 11 Tf 54 546 Td (For isotopes in a chain, populations satisfy coupled first-order differential equations with) Tj ET
+BT /F1 11 Tf 54 532 Td (decay constants \\\(\\lambda_i\\\). PINNs enforce this structure while fitting data.) Tj ET
+BT /F1 13 Tf 54 510 Td (Step-by-step workflow) Tj ET
+BT /F1 11 Tf 54 492 Td (1. **Generate or load decay data** from the notebook simulation cells.) Tj ET
+BT /F1 11 Tf 54 478 Td (2. **Define ANN architecture** and verify output dimension matches isotope count.) Tj ET
+BT /F1 11 Tf 54 464 Td (3. **Train the direct model** using supervised loss on sampled time points.) Tj ET
+BT /F1 11 Tf 54 450 Td (4. **Train the PINN model** using:) Tj ET
+BT /F1 11 Tf 54 436 Td (   - data-matching term) Tj ET
+BT /F1 11 Tf 54 422 Td (   - ODE residual/physics term from automatic differentiation) Tj ET
+BT /F1 11 Tf 54 408 Td (5. **Evaluate both models** on full time grid:) Tj ET
+BT /F1 11 Tf 54 394 Td (   - trajectory error \(MSE\)) Tj ET
+BT /F1 11 Tf 54 380 Td (   - qualitative shape agreement) Tj ET
+BT /F1 11 Tf 54 366 Td (   - physically valid behavior \(non-negativity/trends\)) Tj ET
+BT /F1 11 Tf 54 352 Td (6. **Compare simple vs many-isotope case** and discuss scaling difficulty.) Tj ET
+BT /F1 13 Tf 54 330 Td (What to report in your solution) Tj ET
+BT /F1 11 Tf 54 312 Td (? Side-by-side plots of predicted vs reference trajectories.) Tj ET
+BT /F1 11 Tf 54 298 Td (? Quantitative comparison \(MSE or equivalent\) for direct ANN vs PINN.) Tj ET
+BT /F1 11 Tf 54 284 Td (? One case where physics constraints improve extrapolation/stability.) Tj ET
+BT /F1 11 Tf 54 270 Td (? One practical challenge in training PINNs \(loss weighting, stiffness, optimization\).) Tj ET
+BT /F1 13 Tf 54 248 Td (Suggested checks before submission) Tj ET
+BT /F1 11 Tf 54 230 Td (? Confirm units and time range are consistent.) Tj ET
+BT /F1 11 Tf 54 216 Td (? Ensure gradient-based derivative terms are computed with `requires_grad=True` time) Tj ET
+BT /F1 11 Tf 54 202 Td (  tensors.) Tj ET
+BT /F1 11 Tf 54 188 Td (? Verify reported metrics use the same evaluation grid for both models.) Tj ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000003102 00000 n 
+0000003228 00000 n 
+0000003285 00000 n 
+trailer
+<< /Size 6 /Root 5 0 R >>
+startxref
+3334
+%%EOF

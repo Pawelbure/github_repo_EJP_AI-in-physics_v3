@@ -1,0 +1,60 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 2629 >>
+stream
+BT /F1 16 Tf 54 752 Td (Instruction Sheet 2: Clustering Phases of Matter \(Unsupervised Learning\)) Tj ET
+BT /F1 13 Tf 54 714 Td (Learning goal) Tj ET
+BT /F1 11 Tf 54 696 Td (Use Monte Carlo Ising-model samples to discover phase structure with unsupervised learning) Tj ET
+BT /F1 11 Tf 54 682 Td (\(autoencoder + clustering\), without using explicit phase labels during training.) Tj ET
+BT /F1 13 Tf 54 660 Td (Where to work in this repo) Tj ET
+BT /F1 11 Tf 54 642 Td (? Notebook: `Clustering-phases/Unsupervised_ML_Clustering-phases_ANN.ipynb`) Tj ET
+BT /F1 11 Tf 54 628 Td (? Input data: `Clustering-phases/mc_samples_80.pickle`) Tj ET
+BT /F1 13 Tf 54 606 Td (Physics context) Tj ET
+BT /F1 11 Tf 54 588 Td (At low temperature, spin configurations are ordered; at high temperature, they are) Tj ET
+BT /F1 11 Tf 54 574 Td (disordered. A learned low-dimensional representation should separate these regimes and help) Tj ET
+BT /F1 11 Tf 54 560 Td (identify the transition region.) Tj ET
+BT /F1 13 Tf 54 538 Td (Step-by-step workflow) Tj ET
+BT /F1 11 Tf 54 520 Td (1. **Load Monte Carlo samples** and confirm temperature keys and sample counts.) Tj ET
+BT /F1 11 Tf 54 506 Td (2. **Build data matrix** where each lattice snapshot is flattened into a feature vector.) Tj ET
+BT /F1 11 Tf 54 492 Td (3. **Run dimensionality reduction** using the ANN autoencoder in the notebook.) Tj ET
+BT /F1 11 Tf 54 478 Td (4. **Cluster in latent space** \(e.g., HDBSCAN in the notebook\).) Tj ET
+BT /F1 11 Tf 54 464 Td (5. **Visualize latent space** and color points by temperature to inspect phase separation.) Tj ET
+BT /F1 11 Tf 54 450 Td (6. **Interpret clusters physically:**) Tj ET
+BT /F1 11 Tf 54 436 Td (   - ordered vs disordered phases) Tj ET
+BT /F1 11 Tf 54 422 Td (   - ambiguous/transition region near criticality) Tj ET
+BT /F1 13 Tf 54 400 Td (What to report in your solution) Tj ET
+BT /F1 11 Tf 54 382 Td (? A latent-space plot with temperature coloring.) Tj ET
+BT /F1 11 Tf 54 368 Td (? Cluster labels \(or noise points\) and their temperature ranges.) Tj ET
+BT /F1 11 Tf 54 354 Td (? A short argument for where the phase transition occurs.) Tj ET
+BT /F1 11 Tf 54 340 Td (? A note on uncertainty \(finite-size effects, cluster instability, random initialization\).) Tj ET
+BT /F1 13 Tf 54 318 Td (Suggested checks before submission) Tj ET
+BT /F1 11 Tf 54 300 Td (? Re-run with the same seed to verify consistency.) Tj ET
+BT /F1 11 Tf 54 286 Td (? Confirm cluster conclusions are not from one visualization alone.) Tj ET
+BT /F1 11 Tf 54 272 Td (? Compare at least one alternative latent embedding or clustering parameter choice.) Tj ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000002759 00000 n 
+0000002885 00000 n 
+0000002942 00000 n 
+trailer
+<< /Size 6 /Root 5 0 R >>
+startxref
+2991
+%%EOF

@@ -1,0 +1,66 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Length 2901 >>
+stream
+BT /F1 16 Tf 54 752 Td (Instruction Sheet 1: Classifying Astronomical Objects \(Supervised Learning\)) Tj ET
+BT /F1 13 Tf 54 714 Td (Learning goal) Tj ET
+BT /F1 11 Tf 54 696 Td (Use a labeled astrophysics dataset to train an artificial neural network \(ANN\) that) Tj ET
+BT /F1 11 Tf 54 682 Td (classifies each source as a **STAR**, **GALAXY**, or **QSO**.) Tj ET
+BT /F1 13 Tf 54 660 Td (Where to work in this repo) Tj ET
+BT /F1 11 Tf 54 642 Td (? Notebook: `Classifying-astronomical-objects/Supervised_ML_Classifying-astronomical-) Tj ET
+BT /F1 11 Tf 54 628 Td (  objects_ANN.ipynb`) Tj ET
+BT /F1 11 Tf 54 614 Td (? Input data: `Classifying-astronomical-) Tj ET
+BT /F1 11 Tf 54 600 Td (  objects/Dataset_galaxies_quasars_stars/subdf_unsupervised.pickle`) Tj ET
+BT /F1 13 Tf 54 578 Td (Physics context) Tj ET
+BT /F1 11 Tf 54 560 Td (Photometric and survey-derived features contain enough information to separate source) Tj ET
+BT /F1 11 Tf 54 546 Td (classes statistically. Your ANN learns a nonlinear decision boundary in this feature space.) Tj ET
+BT /F1 13 Tf 54 524 Td (Step-by-step workflow) Tj ET
+BT /F1 11 Tf 54 506 Td (1. **Open the notebook and run imports/setup cells first.**) Tj ET
+BT /F1 11 Tf 54 492 Td (2. **Load the dataset** from the `.pickle` file and inspect:) Tj ET
+BT /F1 11 Tf 54 478 Td (   - feature columns \(input `X`\)) Tj ET
+BT /F1 11 Tf 54 464 Td (   - class labels \(target `y`\)) Tj ET
+BT /F1 11 Tf 54 450 Td (   - class balance \(`STAR`, `GALAXY`, `QSO` counts\)) Tj ET
+BT /F1 11 Tf 54 436 Td (3. **Create train/test split** \(keep `random_state` fixed for reproducibility\).) Tj ET
+BT /F1 11 Tf 54 422 Td (4. **Train the MLP classifier** in the notebook.) Tj ET
+BT /F1 11 Tf 54 408 Td (5. **Evaluate with physics-aware interpretation:**) Tj ET
+BT /F1 11 Tf 54 394 Td (   - confusion matrix) Tj ET
+BT /F1 11 Tf 54 380 Td (   - precision/recall/F1) Tj ET
+BT /F1 11 Tf 54 366 Td (   - which classes are most often confused and why) Tj ET
+BT /F1 11 Tf 54 352 Td (6. **Run the width/depth experiments** \(double-descent section\) and compare train/test) Tj ET
+BT /F1 11 Tf 54 338 Td (   error.) Tj ET
+BT /F1 13 Tf 54 316 Td (What to report in your solution) Tj ET
+BT /F1 11 Tf 54 298 Td (? Final test accuracy and macro-F1.) Tj ET
+BT /F1 11 Tf 54 284 Td (? Confusion matrix with one short interpretation paragraph.) Tj ET
+BT /F1 11 Tf 54 270 Td (? One model limitation \(e.g., class imbalance, domain shift, feature uncertainty\).) Tj ET
+BT /F1 11 Tf 54 256 Td (? One concrete improvement \(feature engineering, balancing, regularization, calibration\).) Tj ET
+BT /F1 13 Tf 54 234 Td (Suggested checks before submission) Tj ET
+BT /F1 11 Tf 54 216 Td (? Same split seed used throughout.) Tj ET
+BT /F1 11 Tf 54 202 Td (? No test data used in training or hyperparameter tuning.) Tj ET
+BT /F1 11 Tf 54 188 Td (? Metrics and plots generated directly from notebook outputs.) Tj ET
+endstream
+endobj
+3 0 obj
+<< /Type /Page /Parent 4 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+endobj
+4 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+5 0 obj
+<< /Type /Catalog /Pages 4 0 R >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000079 00000 n 
+0000003031 00000 n 
+0000003157 00000 n 
+0000003214 00000 n 
+trailer
+<< /Size 6 /Root 5 0 R >>
+startxref
+3263
+%%EOF
