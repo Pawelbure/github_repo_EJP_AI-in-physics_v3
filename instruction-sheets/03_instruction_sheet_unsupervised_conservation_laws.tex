@@ -1,0 +1,143 @@
+\section*{Instruction Sheet 3: Conservation-Law Structure with Unsupervised ML}
+
+\subsection*{Case-study focus}
+In this case study, you use an unsupervised denoising ANN to learn a correction field around the phase-space trajectory of a one-dimensional harmonic oscillator. The network is trained to remove artificial noise from data points. It is not given the oscillator energy, Hamiltonian, or equation of motion during training. The central question is whether the learned pullback field is consistent with the constant-energy manifold of the oscillator.
+
+For a harmonic oscillator with mass \(m\) and spring constant \(c\), using the notebook notation of position \(x\) and velocity \(v\), the energy is
+\[
+H(x,v)=\frac{1}{2}cx^2+\frac{1}{2}mv^2.
+\]
+A trajectory at fixed energy forms a one-dimensional curve in the two-dimensional phase space. The ML task is therefore connected to the physical idea that conservation laws constrain the accessible states of a system to a lower-dimensional manifold.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Explain how a denoising ANN can learn a local correction field from perturbed data.
+    \item Relate the learned pullback field to the idea of a lower-dimensional physical manifold.
+    \item Distinguish unsupervised manifold learning from explicit discovery of a conservation law.
+    \item Interpret PCA-based explained-variance diagnostics and effective dimensionality.
+    \item Validate the learned representation by checking intrinsic dimension and energy consistency after training.
+    \item Explain why physical validation must be performed separately when the training loss contains no explicit physics.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Answer:
+\begin{enumerate}
+    \item What is conserved in an undamped harmonic oscillator?
+    \item What is the shape of a fixed-energy oscillator trajectory in phase space?
+    \item Why is a fixed-energy trajectory lower-dimensional than the full phase space?
+    \item What would it mean for a learned vector field to ``point back'' toward the physical trajectory?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Load and inspect the phase-space data.}
+Run the data-loading cell for \texttt{harmonic\_1d.txt}. The dataset contains samples of position and velocity along an oscillator trajectory.
+
+Record:
+\begin{itemize}
+    \item number of samples,
+    \item input dimension,
+    \item qualitative shape of the raw phase-space plot.
+\end{itemize}
+
+\paragraph{Step 2: Preprocess the data.}
+The notebook normalizes each coordinate to zero mean and unit variance and then applies PCA as a rotation. Explain why preprocessing is useful for ANN training and why the notebook stores the inverse transformations for later physics validation.
+
+\paragraph{Step 3: Train the denoising network across noise levels.}
+The network receives noisy inputs and is trained to output the negative of the artificial perturbation. In other words, the network learns a local correction vector.
+
+Answer:
+\begin{enumerate}
+    \item What is the input to the network during training?
+    \item What is the target output?
+    \item Why does this training objective not explicitly use energy conservation?
+    \item How does the noise scale \(\sigma\) affect the physical meaning of the learned correction?
+\end{enumerate}
+
+\paragraph{Step 4: Interpret explained variance and effective dimensionality.}
+After training, the notebook performs stochastic walks and computes explained-variance ratios with PCA. These diagnostics ask whether the corrected samples concentrate along a low-dimensional structure.
+
+Complete:
+\begin{center}
+\begin{tabular}{l l l}
+\hline
+Noise scale & Dominant PCA behavior & Interpretation \\
+\hline
+Small \(\sigma\) & & \\
+Intermediate \(\sigma\) & & \\
+Large \(\sigma\) & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item For which noise scales does the learned representation appear most one-dimensional?
+    \item Why might very small or very large noise scales be less informative?
+    \item What does effective rank tell us that a phase-space plot alone does not?
+\end{enumerate}
+
+\paragraph{Step 5: Inspect the learned vector field.}
+Run the vector-field visualization. The arrows show the correction predicted by the trained network in processed phase space.
+
+Answer:
+\begin{enumerate}
+    \item Do the arrows point toward the trajectory manifold?
+    \item Are there regions where the correction field is unreliable?
+    \item Why should a visual vector field be treated as evidence, but not proof, of conservation-law structure?
+\end{enumerate}
+
+\paragraph{Step 6: Validation procedure 1 -- local intrinsic dimension after pullback.}
+Run the first quantitative validation. The notebook samples local noisy point clouds, applies the pullback network, and computes local PCA. A successful result should make the corrected cloud approximately line-like.
+
+Record:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Diagnostic & Value \\
+\hline
+Mean participation-ratio dimension & \\
+Median number of PCs for 95\% variance & \\
+Mean variance explained by first PC & \\
+\hline
+\end{tabular}
+\end{center}
+
+Interpret whether the corrected local clouds support a one-dimensional manifold interpretation.
+
+\paragraph{Step 7: Validation procedure 2 -- energy consistency of corrected states.}
+Run the energy-consistency validation. Although the network was not trained on \(H(x,v)\), corrected points should lie closer to the constant-energy curve if the learned pullback is physically meaningful.
+
+Record:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Diagnostic & Value \\
+\hline
+Mean \(|H(\mathrm{noisy})-E_0|\) & \\
+Mean \(|H(\mathrm{corrected})-E_0|\) & \\
+Relative energy-error reduction & \\
+Mean correction/energy-normal alignment & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item Does the pullback reduce the energy error?
+    \item Does the correction direction align with the expected normal direction to the energy contour?
+    \item Does this prove that the network has discovered the Hamiltonian? Why or why not?
+\end{enumerate}
+
+\subsection*{Synthesis task}
+Write a 300--500 word interpretation addressing the following claim:
+
+\begin{quote}
+The ANN has discovered the conservation law of the harmonic oscillator.
+\end{quote}
+
+Argue for a more careful version of this claim. Your answer should mention the training loss, the learned correction field, the constant-energy manifold, and the two validation procedures.
+
+\subsection*{Optional extension}
+Change the oscillator data, noise scale, or network width. Investigate when the pullback field becomes physically misleading. Report one failure mode.

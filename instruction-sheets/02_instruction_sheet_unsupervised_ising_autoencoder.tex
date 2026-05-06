@@ -1,0 +1,139 @@
+\section*{Instruction Sheet 2: Unsupervised ML for Clustering Ising Phases}
+
+\subsection*{Case-study focus}
+In this case study, you use an unsupervised ANN autoencoder to compress two-dimensional Ising spin configurations into a low-dimensional latent representation. The autoencoder is trained only to reconstruct spin configurations. It is not given the temperature, magnetization, Hamiltonian, or phase labels during training. The central question is therefore whether the learned latent space can be interpreted physically after training.
+
+The physical system is the finite two-dimensional square-lattice Ising model. Each configuration consists of spins \(s_i=\pm 1\) on an \(80\times 80\) lattice. The conventional order parameter is the magnetization per spin,
+\[
+M=\frac{1}{D}\sum_{i=1}^{D}s_i,
+\]
+where \(D=N^2\). Because the two ferromagnetic branches \(M>0\) and \(M<0\) are symmetry-related, the order-parameter magnitude \(|M|\) is often more useful for identifying ordered versus disordered regimes.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Explain how an autoencoder performs unsupervised representation learning by minimizing reconstruction error.
+    \item Distinguish compression quality from physical interpretability.
+    \item Interpret a latent space as a candidate representation of physical structure rather than as automatic proof of a phase transition.
+    \item Relate the autoencoder bottleneck to magnetization, spin-flip symmetry, and finite-size phase behavior.
+    \item Use post-hoc validation to compare learned latent coordinates with conventional thermodynamic observables.
+    \item Explain why finite-size systems show rounded and shifted transition indicators rather than an exact singularity.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Answer the following questions:
+\begin{enumerate}
+    \item What distinguishes the ferromagnetic and paramagnetic regimes in the Ising model?
+    \item Why is \(|M|\), rather than \(M\), useful when comparing the two ordered ferromagnetic branches?
+    \item What does it mean for an autoencoder to be unsupervised in this notebook?
+    \item Why would low reconstruction error alone not prove that the autoencoder has learned the phase structure?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Load the Monte Carlo data.}
+Run the cells that load \texttt{mc\_samples\_80.pickle}. The data are converted into a matrix whose rows are flattened spin configurations and whose labels store the simulation temperature.
+
+Record:
+\begin{itemize}
+    \item lattice size \(N\),
+    \item number of lattice sites \(D=N^2\),
+    \item number of simulated temperatures,
+    \item number of configurations used per temperature.
+\end{itemize}
+
+\paragraph{Step 2: Train the autoencoder.}
+Run the autoencoder training cell. The model has a dense encoder, a five-dimensional bottleneck, and a dense decoder with a \(\tanh\) output. It is trained with reconstruction mean squared error.
+
+Answer:
+\begin{enumerate}
+    \item What are the input and output of the autoencoder?
+    \item What is the role of the five-dimensional bottleneck?
+    \item Why is the output activation \(\tanh\) physically reasonable for spin-valued data?
+    \item Why is a validation split used if the learning task is unsupervised?
+\end{enumerate}
+
+\paragraph{Step 3: Inspect the latent representation.}
+After training, the notebook plots the first two latent coordinates colored by temperature and by magnetization. Interpret these plots cautiously.
+
+Answer:
+\begin{enumerate}
+    \item Do low- and high-temperature configurations occupy visibly different regions?
+    \item Do the colors suggest a relation between latent position and magnetization?
+    \item Is the ferromagnetic phase one compact cluster or can it appear as two symmetry-related branches?
+    \item What can a plot show that a scalar metric might miss? What can a scalar metric show that a plot might hide?
+\end{enumerate}
+
+\paragraph{Step 4: Validation procedure 1 -- latent-space physics validation.}
+Run the first validation procedure. It asks whether the latent variables encode:
+\begin{itemize}
+    \item the order-parameter magnitude \(|M|\),
+    \item geometric phase separation,
+    \item phase recoverability by a simple post-hoc classifier.
+\end{itemize}
+
+Record the values:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Diagnostic & Value \\
+\hline
+Cross-validated \(R^2\) for predicting \(|M|\) & \\
+Silhouette score in 5-D latent space & \\
+Silhouette score in AE-1/AE-2 plot & \\
+Balanced phase-classification accuracy & \\
+\hline
+\end{tabular}
+\end{center}
+
+Then answer:
+\begin{enumerate}
+    \item Does the bottleneck encode the conventional order parameter?
+    \item Why does the readout use quadratic latent features?
+    \item Why should the silhouette score be interpreted cautiously for the Ising model?
+    \item Would a high \(R^2\) mean that the autoencoder discovered the Hamiltonian? Explain.
+\end{enumerate}
+
+\paragraph{Step 5: Validation procedure 2 -- thermodynamic validation.}
+Run the second validation procedure. The notebook computes the temperature dependence of
+\[
+\langle |M| \rangle_T
+\]
+and the finite-size susceptibility
+\[
+\chi(T)=\frac{D}{T}\left(\langle M^2\rangle_T-\langle M\rangle_T^2\right).
+\]
+
+Record:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Quantity & Value \\
+\hline
+Exact infinite-lattice \(T_C\) & \\
+Temperature of steepest change in \(\langle |M| \rangle_T\) & \\
+Temperature of susceptibility peak & \\
+Main finite-size deviation from \(T_C\) & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item Does \(\langle |M| \rangle_T\) decrease as temperature increases?
+    \item Does the susceptibility show a peak near the expected critical region?
+    \item Why should finite-size indicators not be expected to equal \(T_C\) exactly?
+    \item How does this thermodynamic analysis anchor the ML visualization in statistical physics?
+\end{enumerate}
+
+\subsection*{Synthesis task}
+Write a 300--500 word explanation of what the autoencoder did and did not learn. Your explanation should explicitly distinguish:
+\begin{itemize}
+    \item reconstruction,
+    \item representation learning,
+    \item post-hoc physical validation,
+    \item conventional statistical-physics interpretation.
+\end{itemize}
+
+\subsection*{Optional extension}
+Change the latent dimension or the denoising noise level and repeat the validation. Does a better reconstruction error always improve the physical interpretability of the latent space?

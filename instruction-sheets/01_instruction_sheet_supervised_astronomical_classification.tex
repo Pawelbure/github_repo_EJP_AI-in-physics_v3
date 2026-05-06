@@ -1,0 +1,123 @@
+\section*{Instruction Sheet 1: Supervised ML for Classifying Astronomical Objects}
+
+\subsection*{Case-study focus}
+In this case study, you use a supervised artificial neural network (ANN) to classify astronomical objects as \texttt{STAR}, \texttt{GALAXY}, or \texttt{QSO}. The aim is not only to obtain a high classification score. The central question is what kind of astrophysical information the ANN uses and how we can validate whether the numerical output has a physically meaningful interpretation.
+
+The notebook uses photometric and morphology-related input features, including SDSS optical bands \texttt{u,g,r,i,z}, WISE infrared bands \texttt{w1,w2,w3,w4}, and the morphology proxy \texttt{resolved}. The classifier is therefore a data-driven model of astronomical source type: it learns a mapping from measured source properties to class labels.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Describe an ANN classifier as a parameterized function \(f_{\bm{\theta}}\) that maps measured astronomical features to class labels.
+    \item Distinguish training, validation, and test data and explain why the test set must remain independent of model development.
+    \item Interpret classification accuracy, balanced accuracy, macro F1-score, and the confusion matrix as complementary validation tools.
+    \item Connect classification errors to astrophysical source properties, such as point-like versus extended morphology and optical/infrared color information.
+    \item Use feature ablation to ask whether the ANN relies on physically interpretable feature groups.
+    \item Identify limitations of the model, including class imbalance, feature correlations, and the risk of interpreting predictive success as physical explanation.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Briefly answer the following questions in your notes:
+\begin{enumerate}
+    \item Which of the three classes do you expect to be easiest to identify from morphology alone? Explain your reasoning.
+    \item Why might quasars be confused with stars, even though they are physically very different objects?
+    \item What kind of information is added by infrared WISE bands compared with optical SDSS bands?
+    \item Why is overall accuracy alone insufficient for judging a classifier trained on an imbalanced astronomical catalogue?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Load and inspect the data.}
+Run the setup cells and inspect the loaded arrays \texttt{tsne\_subsample} and \texttt{tsne\_subsample\_classes}. Record:
+\begin{itemize}
+    \item the number of samples,
+    \item the number of input features,
+    \item the three class labels,
+    \item whether the classes appear balanced or imbalanced.
+\end{itemize}
+
+\paragraph{Step 2: Construct the supervised learning problem.}
+The notebook splits the data into training, validation, and test subsets. In your notes, draw a simple diagram showing which data are used for training and which data are reserved for final evaluation. Explain why using the test data during model tuning would lead to an overly optimistic assessment.
+
+\paragraph{Step 3: Train the ANN classifier.}
+Run the ANN training cell. The model is a feed-forward multilayer perceptron with two hidden layers. While the model is training, monitor the train and test error curves.
+
+Answer:
+\begin{enumerate}
+    \item Does the training error decrease? Does the test error decrease in the same way?
+    \item Is there evidence of overfitting? If yes, at what stage of training?
+    \item What does the ANN learn mathematically: a physical law, a statistical association, or both? Explain.
+\end{enumerate}
+
+\paragraph{Step 4: Evaluate final test-set performance.}
+Run the cell that prints accuracy, balanced accuracy, macro F1-score, and the classification report. Record the values in a table.
+
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Metric & Value \\
+\hline
+Accuracy & \\
+Balanced accuracy & \\
+Macro F1-score & \\
+Class with lowest recall & \\
+Class with lowest precision & \\
+\hline
+\end{tabular}
+\end{center}
+
+Interpret the table. A good result is not simply a high overall accuracy; it should also perform adequately for each class.
+
+\paragraph{Step 5: Validation procedure 1 -- confusion matrix and class-wise errors.}
+Run the confusion-matrix validation. Read the normalized confusion matrix row-wise: each row corresponds to a true class and each entry gives the fraction predicted as each class.
+
+Answer:
+\begin{enumerate}
+    \item Which class is classified most reliably?
+    \item Which pair of classes is confused most often?
+    \item Give a possible astrophysical explanation for this confusion.
+    \item Does the confusion matrix support the claim that the model has learned physically meaningful distinctions, or only that it has learned statistical separations?
+\end{enumerate}
+
+\paragraph{Step 6: Validation procedure 2 -- feature ablation.}
+Run the feature-ablation cell. The notebook compares the full model with models trained:
+\begin{itemize}
+    \item without \texttt{resolved},
+    \item without WISE bands,
+    \item with optical bands plus \texttt{resolved} only.
+\end{itemize}
+
+Complete the table:
+
+\begin{center}
+\begin{tabular}{l c c c}
+\hline
+Feature setting & Balanced accuracy & Macro F1 & Main interpretation \\
+\hline
+All features & & & \\
+Without \texttt{resolved} & & & \\
+Without WISE bands & & & \\
+Optical + \texttt{resolved} only & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Then answer:
+\begin{enumerate}
+    \item Which feature group seems most important for the classifier?
+    \item Does removing a feature group prove that the removed feature causes the classification decision? Why or why not?
+    \item How do feature correlations complicate the interpretation of the ablation study?
+\end{enumerate}
+
+\subsection*{Synthesis task}
+Write a short interpretation of the model in 300--500 words. Your interpretation should include:
+\begin{itemize}
+    \item the supervised learning task,
+    \item the physical meaning of the input feature groups,
+    \item the strongest and weakest validation results,
+    \item one limitation of the ANN classifier,
+    \item one way in which traditional astrophysical reasoning is still needed.
+\end{itemize}
+
+\subsection*{Optional extension}
+Run the model-complexity or double-descent section. Compare how changing width and depth changes train and test error. Discuss whether larger models necessarily produce better physical understanding.

@@ -1,0 +1,571 @@
+\documentclass[11pt]{article}
+\usepackage[a4paper,margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\setlist[itemize]{topsep=2pt,itemsep=2pt}
+\setlist[enumerate]{topsep=2pt,itemsep=2pt}
+\title{Instruction Sheets for AI-Based Modeling Case Studies in Upper-Level Physics}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\noindent These student-facing instruction sheets accompany four executable notebook case studies. They are written to foreground model construction, validation, and physical interpretation rather than black-box use of artificial neural networks.
+
+
+% ------------------------------------------------------------------
+% Student-facing instruction sheets for the four notebook case studies
+% ------------------------------------------------------------------
+% These sheets are designed to accompany executable Jupyter notebooks.
+% They emphasize model construction, validation, and physical interpretation.
+
+\section*{Instruction Sheet 1: Supervised ML for Classifying Astronomical Objects}
+
+\subsection*{Case-study focus}
+In this case study, you use a supervised artificial neural network (ANN) to classify astronomical objects as \texttt{STAR}, \texttt{GALAXY}, or \texttt{QSO}. The aim is not only to obtain a high classification score. The central question is what kind of astrophysical information the ANN uses and how we can validate whether the numerical output has a physically meaningful interpretation.
+
+The notebook uses photometric and morphology-related input features, including SDSS optical bands \texttt{u,g,r,i,z}, WISE infrared bands \texttt{w1,w2,w3,w4}, and the morphology proxy \texttt{resolved}. The classifier is therefore a data-driven model of astronomical source type: it learns a mapping from measured source properties to class labels.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Describe an ANN classifier as a parameterized function \(f_{\bm{\theta}}\) that maps measured astronomical features to class labels.
+    \item Distinguish training, validation, and test data and explain why the test set must remain independent of model development.
+    \item Interpret classification accuracy, balanced accuracy, macro F1-score, and the confusion matrix as complementary validation tools.
+    \item Connect classification errors to astrophysical source properties, such as point-like versus extended morphology and optical/infrared color information.
+    \item Use feature ablation to ask whether the ANN relies on physically interpretable feature groups.
+    \item Identify limitations of the model, including class imbalance, feature correlations, and the risk of interpreting predictive success as physical explanation.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Briefly answer the following questions in your notes:
+\begin{enumerate}
+    \item Which of the three classes do you expect to be easiest to identify from morphology alone? Explain your reasoning.
+    \item Why might quasars be confused with stars, even though they are physically very different objects?
+    \item What kind of information is added by infrared WISE bands compared with optical SDSS bands?
+    \item Why is overall accuracy alone insufficient for judging a classifier trained on an imbalanced astronomical catalogue?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Load and inspect the data.}
+Run the setup cells and inspect the loaded arrays \texttt{tsne\_subsample} and \texttt{tsne\_subsample\_classes}. Record:
+\begin{itemize}
+    \item the number of samples,
+    \item the number of input features,
+    \item the three class labels,
+    \item whether the classes appear balanced or imbalanced.
+\end{itemize}
+
+\paragraph{Step 2: Construct the supervised learning problem.}
+The notebook splits the data into training, validation, and test subsets. In your notes, draw a simple diagram showing which data are used for training and which data are reserved for final evaluation. Explain why using the test data during model tuning would lead to an overly optimistic assessment.
+
+\paragraph{Step 3: Train the ANN classifier.}
+Run the ANN training cell. The model is a feed-forward multilayer perceptron with two hidden layers. While the model is training, monitor the train and test error curves.
+
+Answer:
+\begin{enumerate}
+    \item Does the training error decrease? Does the test error decrease in the same way?
+    \item Is there evidence of overfitting? If yes, at what stage of training?
+    \item What does the ANN learn mathematically: a physical law, a statistical association, or both? Explain.
+\end{enumerate}
+
+\paragraph{Step 4: Evaluate final test-set performance.}
+Run the cell that prints accuracy, balanced accuracy, macro F1-score, and the classification report. Record the values in a table.
+
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Metric & Value \\
+\hline
+Accuracy & \\
+Balanced accuracy & \\
+Macro F1-score & \\
+Class with lowest recall & \\
+Class with lowest precision & \\
+\hline
+\end{tabular}
+\end{center}
+
+Interpret the table. A good result is not simply a high overall accuracy; it should also perform adequately for each class.
+
+\paragraph{Step 5: Validation procedure 1 -- confusion matrix and class-wise errors.}
+Run the confusion-matrix validation. Read the normalized confusion matrix row-wise: each row corresponds to a true class and each entry gives the fraction predicted as each class.
+
+Answer:
+\begin{enumerate}
+    \item Which class is classified most reliably?
+    \item Which pair of classes is confused most often?
+    \item Give a possible astrophysical explanation for this confusion.
+    \item Does the confusion matrix support the claim that the model has learned physically meaningful distinctions, or only that it has learned statistical separations?
+\end{enumerate}
+
+\paragraph{Step 6: Validation procedure 2 -- feature ablation.}
+Run the feature-ablation cell. The notebook compares the full model with models trained:
+\begin{itemize}
+    \item without \texttt{resolved},
+    \item without WISE bands,
+    \item with optical bands plus \texttt{resolved} only.
+\end{itemize}
+
+Complete the table:
+
+\begin{center}
+\begin{tabular}{l c c c}
+\hline
+Feature setting & Balanced accuracy & Macro F1 & Main interpretation \\
+\hline
+All features & & & \\
+Without \texttt{resolved} & & & \\
+Without WISE bands & & & \\
+Optical + \texttt{resolved} only & & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Then answer:
+\begin{enumerate}
+    \item Which feature group seems most important for the classifier?
+    \item Does removing a feature group prove that the removed feature causes the classification decision? Why or why not?
+    \item How do feature correlations complicate the interpretation of the ablation study?
+\end{enumerate}
+
+\subsection*{Synthesis task}
+Write a short interpretation of the model in 300--500 words. Your interpretation should include:
+\begin{itemize}
+    \item the supervised learning task,
+    \item the physical meaning of the input feature groups,
+    \item the strongest and weakest validation results,
+    \item one limitation of the ANN classifier,
+    \item one way in which traditional astrophysical reasoning is still needed.
+\end{itemize}
+
+\subsection*{Optional extension}
+Run the model-complexity or double-descent section. Compare how changing width and depth changes train and test error. Discuss whether larger models necessarily produce better physical understanding.
+
+\section*{Instruction Sheet 2: Unsupervised ML for Clustering Ising Phases}
+
+\subsection*{Case-study focus}
+In this case study, you use an unsupervised ANN autoencoder to compress two-dimensional Ising spin configurations into a low-dimensional latent representation. The autoencoder is trained only to reconstruct spin configurations. It is not given the temperature, magnetization, Hamiltonian, or phase labels during training. The central question is therefore whether the learned latent space can be interpreted physically after training.
+
+The physical system is the finite two-dimensional square-lattice Ising model. Each configuration consists of spins \(s_i=\pm 1\) on an \(80\times 80\) lattice. The conventional order parameter is the magnetization per spin,
+\[
+M=\frac{1}{D}\sum_{i=1}^{D}s_i,
+\]
+where \(D=N^2\). Because the two ferromagnetic branches \(M>0\) and \(M<0\) are symmetry-related, the order-parameter magnitude \(|M|\) is often more useful for identifying ordered versus disordered regimes.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Explain how an autoencoder performs unsupervised representation learning by minimizing reconstruction error.
+    \item Distinguish compression quality from physical interpretability.
+    \item Interpret a latent space as a candidate representation of physical structure rather than as automatic proof of a phase transition.
+    \item Relate the autoencoder bottleneck to magnetization, spin-flip symmetry, and finite-size phase behavior.
+    \item Use post-hoc validation to compare learned latent coordinates with conventional thermodynamic observables.
+    \item Explain why finite-size systems show rounded and shifted transition indicators rather than an exact singularity.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Answer the following questions:
+\begin{enumerate}
+    \item What distinguishes the ferromagnetic and paramagnetic regimes in the Ising model?
+    \item Why is \(|M|\), rather than \(M\), useful when comparing the two ordered ferromagnetic branches?
+    \item What does it mean for an autoencoder to be unsupervised in this notebook?
+    \item Why would low reconstruction error alone not prove that the autoencoder has learned the phase structure?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Load the Monte Carlo data.}
+Run the cells that load \texttt{mc\_samples\_80.pickle}. The data are converted into a matrix whose rows are flattened spin configurations and whose labels store the simulation temperature.
+
+Record:
+\begin{itemize}
+    \item lattice size \(N\),
+    \item number of lattice sites \(D=N^2\),
+    \item number of simulated temperatures,
+    \item number of configurations used per temperature.
+\end{itemize}
+
+\paragraph{Step 2: Train the autoencoder.}
+Run the autoencoder training cell. The model has a dense encoder, a five-dimensional bottleneck, and a dense decoder with a \(\tanh\) output. It is trained with reconstruction mean squared error.
+
+Answer:
+\begin{enumerate}
+    \item What are the input and output of the autoencoder?
+    \item What is the role of the five-dimensional bottleneck?
+    \item Why is the output activation \(\tanh\) physically reasonable for spin-valued data?
+    \item Why is a validation split used if the learning task is unsupervised?
+\end{enumerate}
+
+\paragraph{Step 3: Inspect the latent representation.}
+After training, the notebook plots the first two latent coordinates colored by temperature and by magnetization. Interpret these plots cautiously.
+
+Answer:
+\begin{enumerate}
+    \item Do low- and high-temperature configurations occupy visibly different regions?
+    \item Do the colors suggest a relation between latent position and magnetization?
+    \item Is the ferromagnetic phase one compact cluster or can it appear as two symmetry-related branches?
+    \item What can a plot show that a scalar metric might miss? What can a scalar metric show that a plot might hide?
+\end{enumerate}
+
+\paragraph{Step 4: Validation procedure 1 -- latent-space physics validation.}
+Run the first validation procedure. It asks whether the latent variables encode:
+\begin{itemize}
+    \item the order-parameter magnitude \(|M|\),
+    \item geometric phase separation,
+    \item phase recoverability by a simple post-hoc classifier.
+\end{itemize}
+
+Record the values:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Diagnostic & Value \\
+\hline
+Cross-validated \(R^2\) for predicting \(|M|\) & \\
+Silhouette score in 5-D latent space & \\
+Silhouette score in AE-1/AE-2 plot & \\
+Balanced phase-classification accuracy & \\
+\hline
+\end{tabular}
+\end{center}
+
+Then answer:
+\begin{enumerate}
+    \item Does the bottleneck encode the conventional order parameter?
+    \item Why does the readout use quadratic latent features?
+    \item Why should the silhouette score be interpreted cautiously for the Ising model?
+    \item Would a high \(R^2\) mean that the autoencoder discovered the Hamiltonian? Explain.
+\end{enumerate}
+
+\paragraph{Step 5: Validation procedure 2 -- thermodynamic validation.}
+Run the second validation procedure. The notebook computes the temperature dependence of
+\[
+\langle |M| \rangle_T
+\]
+and the finite-size susceptibility
+\[
+\chi(T)=\frac{D}{T}\left(\langle M^2\rangle_T-\langle M\rangle_T^2\right).
+\]
+
+Record:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Quantity & Value \\
+\hline
+Exact infinite-lattice \(T_C\) & \\
+Temperature of steepest change in \(\langle |M| \rangle_T\) & \\
+Temperature of susceptibility peak & \\
+Main finite-size deviation from \(T_C\) & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item Does \(\langle |M| \rangle_T\) decrease as temperature increases?
+    \item Does the susceptibility show a peak near the expected critical region?
+    \item Why should finite-size indicators not be expected to equal \(T_C\) exactly?
+    \item How does this thermodynamic analysis anchor the ML visualization in statistical physics?
+\end{enumerate}
+
+\subsection*{Synthesis task}
+Write a 300--500 word explanation of what the autoencoder did and did not learn. Your explanation should explicitly distinguish:
+\begin{itemize}
+    \item reconstruction,
+    \item representation learning,
+    \item post-hoc physical validation,
+    \item conventional statistical-physics interpretation.
+\end{itemize}
+
+\subsection*{Optional extension}
+Change the latent dimension or the denoising noise level and repeat the validation. Does a better reconstruction error always improve the physical interpretability of the latent space?
+
+\section*{Instruction Sheet 3: Conservation-Law Structure with Unsupervised ML}
+
+\subsection*{Case-study focus}
+In this case study, you use an unsupervised denoising ANN to learn a correction field around the phase-space trajectory of a one-dimensional harmonic oscillator. The network is trained to remove artificial noise from data points. It is not given the oscillator energy, Hamiltonian, or equation of motion during training. The central question is whether the learned pullback field is consistent with the constant-energy manifold of the oscillator.
+
+For a harmonic oscillator with mass \(m\) and spring constant \(c\), using the notebook notation of position \(x\) and velocity \(v\), the energy is
+\[
+H(x,v)=\frac{1}{2}cx^2+\frac{1}{2}mv^2.
+\]
+A trajectory at fixed energy forms a one-dimensional curve in the two-dimensional phase space. The ML task is therefore connected to the physical idea that conservation laws constrain the accessible states of a system to a lower-dimensional manifold.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Explain how a denoising ANN can learn a local correction field from perturbed data.
+    \item Relate the learned pullback field to the idea of a lower-dimensional physical manifold.
+    \item Distinguish unsupervised manifold learning from explicit discovery of a conservation law.
+    \item Interpret PCA-based explained-variance diagnostics and effective dimensionality.
+    \item Validate the learned representation by checking intrinsic dimension and energy consistency after training.
+    \item Explain why physical validation must be performed separately when the training loss contains no explicit physics.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Answer:
+\begin{enumerate}
+    \item What is conserved in an undamped harmonic oscillator?
+    \item What is the shape of a fixed-energy oscillator trajectory in phase space?
+    \item Why is a fixed-energy trajectory lower-dimensional than the full phase space?
+    \item What would it mean for a learned vector field to ``point back'' toward the physical trajectory?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Load and inspect the phase-space data.}
+Run the data-loading cell for \texttt{harmonic\_1d.txt}. The dataset contains samples of position and velocity along an oscillator trajectory.
+
+Record:
+\begin{itemize}
+    \item number of samples,
+    \item input dimension,
+    \item qualitative shape of the raw phase-space plot.
+\end{itemize}
+
+\paragraph{Step 2: Preprocess the data.}
+The notebook normalizes each coordinate to zero mean and unit variance and then applies PCA as a rotation. Explain why preprocessing is useful for ANN training and why the notebook stores the inverse transformations for later physics validation.
+
+\paragraph{Step 3: Train the denoising network across noise levels.}
+The network receives noisy inputs and is trained to output the negative of the artificial perturbation. In other words, the network learns a local correction vector.
+
+Answer:
+\begin{enumerate}
+    \item What is the input to the network during training?
+    \item What is the target output?
+    \item Why does this training objective not explicitly use energy conservation?
+    \item How does the noise scale \(\sigma\) affect the physical meaning of the learned correction?
+\end{enumerate}
+
+\paragraph{Step 4: Interpret explained variance and effective dimensionality.}
+After training, the notebook performs stochastic walks and computes explained-variance ratios with PCA. These diagnostics ask whether the corrected samples concentrate along a low-dimensional structure.
+
+Complete:
+\begin{center}
+\begin{tabular}{l l l}
+\hline
+Noise scale & Dominant PCA behavior & Interpretation \\
+\hline
+Small \(\sigma\) & & \\
+Intermediate \(\sigma\) & & \\
+Large \(\sigma\) & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item For which noise scales does the learned representation appear most one-dimensional?
+    \item Why might very small or very large noise scales be less informative?
+    \item What does effective rank tell us that a phase-space plot alone does not?
+\end{enumerate}
+
+\paragraph{Step 5: Inspect the learned vector field.}
+Run the vector-field visualization. The arrows show the correction predicted by the trained network in processed phase space.
+
+Answer:
+\begin{enumerate}
+    \item Do the arrows point toward the trajectory manifold?
+    \item Are there regions where the correction field is unreliable?
+    \item Why should a visual vector field be treated as evidence, but not proof, of conservation-law structure?
+\end{enumerate}
+
+\paragraph{Step 6: Validation procedure 1 -- local intrinsic dimension after pullback.}
+Run the first quantitative validation. The notebook samples local noisy point clouds, applies the pullback network, and computes local PCA. A successful result should make the corrected cloud approximately line-like.
+
+Record:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Diagnostic & Value \\
+\hline
+Mean participation-ratio dimension & \\
+Median number of PCs for 95\% variance & \\
+Mean variance explained by first PC & \\
+\hline
+\end{tabular}
+\end{center}
+
+Interpret whether the corrected local clouds support a one-dimensional manifold interpretation.
+
+\paragraph{Step 7: Validation procedure 2 -- energy consistency of corrected states.}
+Run the energy-consistency validation. Although the network was not trained on \(H(x,v)\), corrected points should lie closer to the constant-energy curve if the learned pullback is physically meaningful.
+
+Record:
+\begin{center}
+\begin{tabular}{l l}
+\hline
+Diagnostic & Value \\
+\hline
+Mean \(|H(\mathrm{noisy})-E_0|\) & \\
+Mean \(|H(\mathrm{corrected})-E_0|\) & \\
+Relative energy-error reduction & \\
+Mean correction/energy-normal alignment & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item Does the pullback reduce the energy error?
+    \item Does the correction direction align with the expected normal direction to the energy contour?
+    \item Does this prove that the network has discovered the Hamiltonian? Why or why not?
+\end{enumerate}
+
+\subsection*{Synthesis task}
+Write a 300--500 word interpretation addressing the following claim:
+
+\begin{quote}
+The ANN has discovered the conservation law of the harmonic oscillator.
+\end{quote}
+
+Argue for a more careful version of this claim. Your answer should mention the training loss, the learned correction field, the constant-energy manifold, and the two validation procedures.
+
+\subsection*{Optional extension}
+Change the oscillator data, noise scale, or network width. Investigate when the pullback field becomes physically misleading. Report one failure mode.
+
+\section*{Instruction Sheet 4: Supervised Modeling of a Radioactive Decay Chain with a PINN}
+
+\subsection*{Case-study focus}
+In this case study, you model a radioactive decay chain
+\[
+N_1 \rightarrow N_2 \rightarrow N_3
+\]
+with a direct supervised ANN and a physics-informed neural network (PINN). The system is governed by
+\[
+\frac{dN_1}{dt}=-\lambda_1N_1,\qquad
+\frac{dN_2}{dt}=\lambda_1N_1-\lambda_2N_2,\qquad
+\frac{dN_3}{dt}=\lambda_2N_2.
+\]
+The direct ANN learns from a small number of data points. The PINN additionally uses the differential-equation residuals as part of the loss. The central question is whether encoding physical structure in the learning objective improves the model's interpolation, extrapolation, and physical plausibility.
+
+\subsection*{Learning goals}
+After completing this activity, you should be able to:
+\begin{itemize}
+    \item Describe the decay-chain equations as a physics-based model of coupled time evolution.
+    \item Explain how a direct ANN represents a mapping \(t\mapsto (N_1,N_2,N_3)\).
+    \item Explain how a PINN adds physical constraints through differential-equation residuals.
+    \item Compare data-driven fitting with physics-informed fitting under sparse-data conditions.
+    \item Evaluate model outputs using both numerical error and physical criteria such as residual size, extrapolation behavior, non-negativity, and total-population consistency.
+    \item Identify limitations of PINNs, including sensitivity to loss balancing, collocation-point choice, optimizer behavior, and the difference between satisfying a residual approximately and understanding the physics.
+\end{itemize}
+
+\subsection*{Before running the notebook}
+Answer:
+\begin{enumerate}
+    \item What physical process is represented by each term in the three differential equations?
+    \item What should happen to \(N_1(t)\), \(N_2(t)\), and \(N_3(t)\) over time?
+    \item Is the total population \(N_1+N_2+N_3\) conserved in this closed decay chain? Show this from the equations.
+    \item Why might a direct ANN trained on only a few points extrapolate poorly?
+\end{enumerate}
+
+\subsection*{Notebook workflow}
+
+\paragraph{Step 1: Simulate reference data.}
+Run the simulation cell. The notebook uses
+\[
+\lambda_1=0.5,\qquad \lambda_2=0.3,
+\]
+with initial values \(N_1(0)=0.8\), \(N_2(0)=0.1\), and \(N_3(0)=0.5\). The reference solution is generated by numerical Euler integration over the training interval.
+
+Record:
+\begin{itemize}
+    \item training time interval,
+    \item extrapolation interval,
+    \item number of collocation points,
+    \item initial total population \(N_1(0)+N_2(0)+N_3(0)\).
+\end{itemize}
+
+\paragraph{Step 2: Inspect the ANN architecture.}
+The model maps one input, time \(t\), to three outputs, \((N_1,N_2,N_3)\). The hidden layers use \(\tanh\) activations.
+
+Answer:
+\begin{enumerate}
+    \item Why is the output dimension three?
+    \item What does it mean to treat the ANN as a parameterized function \(f_{\bm{\theta}}(t)\)?
+    \item Does the architecture itself enforce the decay equations, non-negativity, or conservation of total population?
+\end{enumerate}
+
+\paragraph{Step 3: Train the direct ANN.}
+Run the direct ANN section. This model is trained only on the selected collocation data values.
+
+Answer:
+\begin{enumerate}
+    \item How many data points are used for training?
+    \item Does a low training loss at the collocation points guarantee accurate behavior between the points?
+    \item What kind of information is missing from the direct ANN loss?
+\end{enumerate}
+
+\paragraph{Step 4: Train the PINN.}
+Run the PINN section. The PINN loss contains two parts:
+\[
+\mathcal{L}_{\mathrm{PINN}}
+=
+\mathcal{L}_{\mathrm{data}}
++
+\mathcal{L}_{\mathrm{ODE}},
+\]
+where \(\mathcal{L}_{\mathrm{ODE}}\) penalizes violations of the decay-chain equations.
+
+Answer:
+\begin{enumerate}
+    \item How are automatic derivatives used to compute \(dN_i/dt\)?
+    \item What does each residual term \(r_1,r_2,r_3\) measure physically?
+    \item Why can an ODE residual act as a learning bias?
+    \item Does the PINN use physics as data, as architecture, or as a loss constraint?
+\end{enumerate}
+
+\paragraph{Step 5: Compare interpolation and extrapolation.}
+Run the evaluation and plotting cells. The notebook compares the direct ANN and the PINN both within the training interval and in an extrapolation interval.
+
+Complete:
+\begin{center}
+\begin{tabular}{l c c}
+\hline
+Diagnostic & Direct ANN & PINN \\
+\hline
+Training-region MSE & & \\
+ODE residual loss & -- & \\
+Extrapolation error & & \\
+Qualitative extrapolation behavior & & \\
+\hline
+\end{tabular}
+\end{center}
+
+Answer:
+\begin{enumerate}
+    \item Which model follows the reference solution better in the extrapolation region?
+    \item Does the PINN improvement come from more data, more physics, or both?
+    \item Are there time regions where either model gives physically implausible predictions?
+\end{enumerate}
+
+\paragraph{Step 6: Add physical consistency checks.}
+Use the plotted predictions to check:
+\begin{itemize}
+    \item whether \(N_1,N_2,N_3\) remain non-negative,
+    \item whether \(N_1+N_2+N_3\) remains approximately constant,
+    \item whether \(N_1\) decreases monotonically,
+    \item whether \(N_3\) increases monotonically in the modeled interval.
+\end{itemize}
+
+These checks are not merely numerical. They test whether the learned function respects qualitative physics.
+
+\subsection*{Synthesis task}
+Write a 300--500 word comparison of the direct ANN and the PINN. Your explanation should include:
+\begin{itemize}
+    \item what information each model receives during training,
+    \item how the loss functions differ,
+    \item which model generalizes better and why,
+    \item one physical diagnostic beyond MSE,
+    \item one limitation of the PINN approach.
+\end{itemize}
+
+\subsection*{Optional extension}
+Vary the number and location of collocation points. Investigate whether the PINN still outperforms the direct ANN when the collocation points are clustered in one part of the time interval. Explain the result in terms of data coverage and physics-based constraints.
+\end{document}
