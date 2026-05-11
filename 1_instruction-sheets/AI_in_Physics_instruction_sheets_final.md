@@ -67,11 +67,11 @@ The central question is therefore:
 
 > Can the learned autoencoder bottleneck be interpreted physically after training?
 
-The physical system is the finite two-dimensional square-lattice Ising model. Each configuration consists of spins $s_i=\pm 1$ on an $80\times80$ lattice. The conventional order parameter is the magnetization per spin,
+The physical system is the finite two-dimensional square-lattice Ising model. Each configuration consists of spins $s_k=\pm 1$ on an $80\times80$ lattice. The conventional order parameter is the magnetization per spin,
 
-$m=\frac{1}{D}\sum_{i=1}^{D}s_i.$
+$m=\frac{1}{d_x}\sum_{k=1}^{d_x}s_k.$
 
-where $D=N^2$. Because the two ferromagnetic branches $m>0$ and $m<0$ are symmetry-related, the order-parameter magnitude $\lvert m\rvert$ is often more useful for identifying ordered versus disordered regimes.
+where $d_x=N^2$. Because the two ferromagnetic branches $m>0$ and $m<0$ are symmetry-related, the order-parameter magnitude $\lvert m\rvert$ is often more useful for identifying ordered versus disordered regimes.
 
 ## Learning goals
 
@@ -199,7 +199,7 @@ The notebook trains a simple supervised readout from the frozen autoencoder bott
 
 Record:
 
-| Split | R² | MAE(|m|) | RMSE(|m|) |
+| Split | $R²$ | MAE($|m|$) | RMSE($|m|$) |
 |---|---:|---:|---:|
 | Train | | | |
 | Validation | | | |
