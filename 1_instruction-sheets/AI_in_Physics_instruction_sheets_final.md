@@ -199,7 +199,7 @@ The notebook trains a simple supervised readout from the frozen autoencoder bott
 
 Record:
 
-| Split | $R^2$ | MAE($\lvert m\rvert$) | RMSE($\lvert m\rvert$) |
+| Split | R^2 | MAE(abs(m)) | RMSE(abs(m)) |
 |---|---:|---:|---:|
 | Train | | | |
 | Validation | | | |
@@ -355,8 +355,8 @@ Record:
 
 | Diagnostic | Value |
 |---|---:|
-| Mean &vert;H(noisy) - E0&vert; | |
-| Mean &vert;H(corrected) - E0&vert; | |
+| Mean abs(H(noisy) - E0); | |
+| Mean abs(H(corrected) - E0&vert) | |
 | Relative energy-error reduction | |
 | Mean correction/energy-normal alignment | |
 
@@ -597,7 +597,7 @@ Answer:
 
 Run **“PINN.”** The PINN loss contains two parts:
 
-$\mathcal{L}_{\mathrm{PINN}} = \mathcal{L}_{\mathrm{data}} + \mathcal{L}_{\mathrm{ODE}}.$
+L_PINN = L_data + L_ODE,
 
 where $\mathcal{L}_{\mathrm{ODE}}$ penalizes violations of the decay-chain equations.
 
