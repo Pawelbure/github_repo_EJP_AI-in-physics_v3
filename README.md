@@ -1,4 +1,4 @@
-# An Instructional Proposal for Teaching About Data-Driven Modeling With AI in Physics
+# An Instructional Proposal for Teaching AI Integration in Physics
 
 The entire code and datasets for the manuscript can be found in this repository. Please be aware that the code is inspired by the listed references cited on top of each notebook.
 
