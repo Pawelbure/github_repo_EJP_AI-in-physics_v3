@@ -12,5 +12,5 @@ Note: Results in your computations might differ from the exemplary use cases in 
 
 ### Link to the Binder:
 
-TBD
+[`https://mybinder.org/v2/gh/Pawelbure/github_repo_EJP_AI-in-physics_v3/main`](https://mybinder.org/v2/gh/Pawelbure/github_repo_EJP_AI-in-physics_v3/main)
 
