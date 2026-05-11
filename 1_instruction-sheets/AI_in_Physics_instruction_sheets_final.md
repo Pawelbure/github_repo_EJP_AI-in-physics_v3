@@ -199,7 +199,7 @@ The notebook trains a simple supervised readout from the frozen autoencoder bott
 
 Record:
 
-| Split | $R²$ | MAE($|m|$) | RMSE($|m|$) |
+| Split | $R^2$ | MAE($\lvert m\rvert$) | RMSE($\lvert m\rvert$) |
 |---|---:|---:|---:|
 | Train | | | |
 | Validation | | | |
