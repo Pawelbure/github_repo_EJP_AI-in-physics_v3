@@ -17,10 +17,10 @@ The instructions are written as a single Markdown file so that they can be read 
 
 | Activity | Topic | Notebook |
 |---:|---|---|
-| 1 | Unsupervised ML for clustering Ising phases | [`Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb`](Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb) |
-| 2 | Conservation-law structure with unsupervised ML | [`Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb`](Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb) |
-| 3 | Supervised ML for classifying astronomical objects | [`Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb`](Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb) |
-| 4 | Radioactive decay chain modeling with a PINN | [`Supervised_ML-chained-radioactive-decay_validated.ipynb`](Supervised_ML-chained-radioactive-decay_validated.ipynb) |
+| 1 | Unsupervised ML for clustering Ising phases | `Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb` |
+| 2 | Conservation-law structure with unsupervised ML | `Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb` |
+| 3 | Supervised ML for classifying astronomical objects | `Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb` |
+| 4 | Radioactive decay chain modeling with a PINN | `Supervised_ML-chained-radioactive-decay_validated.ipynb` |
 
 ---
 
@@ -57,7 +57,7 @@ Generated figures are saved by the notebooks in the current working directory or
 
 # Activity 1: Unsupervised ML for Clustering Ising Phases
 
-**Notebook:** [`Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb`](Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb)
+**Notebook:** `Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb`
 
 ## Case-study focus
 
@@ -231,7 +231,7 @@ Group the encoded test data by temperature and compute the average \(\langle |m|
 
 # Activity 2: Conservation-Law Structure with Unsupervised ML
 
-**Notebook:** [`Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb`](Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb)
+**Notebook:** `Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb`
 
 ## Case-study focus
 
@@ -386,7 +386,7 @@ Change the oscillator data, noise scale, or network width. Investigate when the 
 
 # Activity 3: Supervised ML for Classifying Astronomical Objects
 
-**Notebook:** [`Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb`](Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb)
+**Notebook:** `Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb`
 
 ## Case-study focus
 
@@ -523,7 +523,7 @@ Run the model-complexity or double-descent section. Compare how changing width a
 
 # Activity 4: Radioactive Decay Chain Modeling with a PINN
 
-**Notebook:** [`Supervised_ML-chained-radioactive-decay_validated.ipynb`](Supervised_ML-chained-radioactive-decay_validated.ipynb)
+**Notebook:** `Supervised_ML-chained-radioactive-decay_validated.ipynb`
 
 ## Case-study focus
 
