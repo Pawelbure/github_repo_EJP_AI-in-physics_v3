@@ -17,10 +17,10 @@ The instructions are written as a single Markdown file so that they can be read 
 
 | Activity | Topic | Notebook |
 |---:|---|---|
-| 1 | Unsupervised ML for clustering Ising phases | `Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb` |
-| 2 | Conservation-law structure with unsupervised ML | `Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb` |
-| 3 | Supervised ML for classifying astronomical objects | `Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb` |
-| 4 | Radioactive decay chain modeling with a PINN | `Supervised_ML-chained-radioactive-decay_validated.ipynb` |
+| 1 | Unsupervised ML for clustering Ising phases | [`Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb`](Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb) |
+| 2 | Conservation-law structure with unsupervised ML | [`Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb`](Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb) |
+| 3 | Supervised ML for classifying astronomical objects | [`Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb`](Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb) |
+| 4 | Radioactive decay chain modeling with a PINN | [`Supervised_ML-chained-radioactive-decay_validated.ipynb`](Supervised_ML-chained-radioactive-decay_validated.ipynb) |
 
 ---
 
@@ -36,7 +36,7 @@ Work through the notebooks in the order above. For each activity:
 
 The goal is not only to obtain a high numerical score or a visually appealing plot. In every activity, the central question is:
 
-> What has the artificial neural network (ANN) learned, how can we validate that interpretation, and where are the limits of the model?
+> What has the neural network learned, how can we validate that interpretation, and where are the limits of the model?
 
 ---
 
@@ -57,7 +57,7 @@ Generated figures are saved by the notebooks in the current working directory or
 
 # Activity 1: Unsupervised ML for Clustering Ising Phases
 
-**Notebook:** `Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb`
+**Notebook:** [`Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb`](Unsupervised_ML_clustering-phases_AE_train_test_validation.ipynb)
 
 ## Case-study focus
 
@@ -67,13 +67,13 @@ The central question is therefore:
 
 > Can the learned autoencoder bottleneck be interpreted physically after training?
 
-The physical system is the finite two-dimensional square-lattice Ising model. Each configuration consists of spins \(s_k=\pm 1\) on an \(80\times80\) lattice. The conventional order parameter is the magnetization per spin,
+The physical system is the finite two-dimensional square-lattice Ising model. Each configuration consists of spins $s_i=\pm 1$ on an $80\times80$ lattice. The conventional order parameter is the magnetization per spin,
 
 $$
-m=\frac{1}{d_x}\sum_{i=1}^{d_x}s_i,
+m=\frac{1}{D}\sum_{i=1}^{D}s_i,
 $$
 
-where \(d_x=N^2\). Because the two ferromagnetic branches \(m>0\) and \(m<0\) are symmetry-related, the order-parameter magnitude \(|m|\) is often more useful for identifying ordered versus disordered regimes.
+where $D=N^2$. Because the two ferromagnetic branches $m>0$ and $m<0$ are symmetry-related, the order-parameter magnitude $\lvert m\rvert$ is often more useful for identifying ordered versus disordered regimes.
 
 ## Learning goals
 
@@ -91,7 +91,7 @@ After completing this activity, you should be able to:
 Answer the following questions:
 
 1. What distinguishes the ferromagnetic and paramagnetic regimes in the Ising model?
-2. Why is \(|m|\), rather than \(m\), useful when comparing the two ordered ferromagnetic branches?
+2. Why is $\lvert m\rvert$, rather than $m$, useful when comparing the two ordered ferromagnetic branches?
 3. What does it mean for an autoencoder to be unsupervised in this notebook?
 4. Why would low reconstruction error alone not prove that the autoencoder has learned the phase structure?
 
@@ -111,14 +111,14 @@ Record:
 
 ### Step 2: Load and flatten the spin configurations
 
-Run the section **“Load and flatten the spin configurations.”** The notebook loads `mc_samples_80.pickle`, flattens each \(80\times80\) configuration into a vector of length \(6400\), and stores the corresponding temperature values for post-hoc interpretation.
+Run the section **“Load and flatten the spin configurations.”** The notebook loads `mc_samples_80.pickle`, flattens each $80\times80$ configuration into a vector of length $6400$, and stores the corresponding temperature values for post-hoc interpretation.
 
 Record:
 
 | Quantity | Value |
 |---|---|
-| Lattice size \(N\) | |
-| Number of lattice sites \(D=N^2\) | |
+| Lattice size $N$ | |
+| Number of lattice sites $D=N^2$ | |
 | Number of temperature batches | |
 | Shape of `lattice_bank` | |
 | Shape of `temperature_bank` | |
@@ -195,9 +195,9 @@ Answer:
 
 ### Step 6: Post-hoc validation by predicting the order-parameter magnitude
 
-Run the section **“Regression probe: predict the order-parameter magnitude \(|M|\).”**
+Run the section **“Regression probe: predict the order-parameter magnitude $\lvert M\rvert$.”**
 
-The notebook trains a simple supervised readout from the frozen autoencoder bottleneck to the normalized order-parameter magnitude \(|m|\). This does not change the autoencoder weights. It asks whether the learned representation contains information about a conventional physical observable.
+The notebook trains a simple supervised readout from the frozen autoencoder bottleneck to the normalized order-parameter magnitude $\lvert m\rvert$. This does not change the autoencoder weights. It asks whether the learned representation contains information about a conventional physical observable.
 
 Record:
 
@@ -209,14 +209,14 @@ Record:
 
 Answer:
 
-1. Does the bottleneck contain enough information to recover \(|m|\)?
+1. Does the bottleneck contain enough information to recover $\lvert m\rvert$?
 2. Why does the readout use quadratic latent features?
-3. Does a high \(R^2\) mean that the autoencoder discovered the Ising Hamiltonian? Explain.
+3. Does a high $R^2$ mean that the autoencoder discovered the Ising Hamiltonian? Explain.
 4. What is the difference between “the latent space is physically useful” and “the model has learned the physics”?
 
 ## Synthesis task
 
-Write a 300–500 explanation of what the autoencoder did and did not learn. Your explanation should explicitly distinguish:
+Write a 300–500 word explanation of what the autoencoder did and did not learn. Your explanation should explicitly distinguish:
 
 - reconstruction;
 - representation learning;
@@ -225,13 +225,13 @@ Write a 300–500 explanation of what the autoencoder did and did not learn. You
 
 ## Optional extension
 
-Group the encoded test data by temperature and compute the average \(\langle |m| \rangle_T\). Compare this conventional order-parameter trend with the latent-space visualization. Does the autoencoder representation sharpen, blur, or distort the finite-size crossover?
+Group the encoded test data by temperature and compute the average $\langle \lvert m\rvert \rangle_T$. Compare this conventional order-parameter trend with the latent-space visualization. Does the autoencoder representation sharpen, blur, or distort the finite-size crossover?
 
 ---
 
 # Activity 2: Conservation-Law Structure with Unsupervised ML
 
-**Notebook:** `Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb`
+**Notebook:** [`Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb`](Unsupervised_ML_Detecting-conservation-laws_validated_corrected.ipynb)
 
 ## Case-study focus
 
@@ -241,7 +241,7 @@ The central question is:
 
 > Is the learned pullback field consistent with the constant-energy manifold of the oscillator?
 
-For a harmonic oscillator with mass \(m\) and spring constant \(c\), using the notebook notation of position \(x\) and velocity \(v\), the energy is
+For a harmonic oscillator with mass $m$ and spring constant $c$, using the notebook notation of position $x$ and velocity $v$, the energy is
 
 $$
 H(x,v)=\frac{1}{2}cx^2+\frac{1}{2}mv^2.
@@ -302,7 +302,7 @@ Answer:
 1. What is the input to the network during training?
 2. What is the target output?
 3. Why does this training objective not explicitly use energy conservation?
-4. How does the noise scale \(\sigma\) affect the physical meaning of the learned correction?
+4. How does the noise scale $\sigma$ affect the physical meaning of the learned correction?
 
 ### Step 4: Interpret explained variance and effective dimensionality
 
@@ -312,9 +312,9 @@ Complete:
 
 | Noise scale | Dominant PCA behavior | Interpretation |
 |---|---|---|
-| Small \(\sigma\) | | |
-| Intermediate \(\sigma\) | | |
-| Large \(\sigma\) | | |
+| Small $\sigma$ | | |
+| Intermediate $\sigma$ | | |
+| Large $\sigma$ | | |
 
 Answer:
 
@@ -353,14 +353,14 @@ Interpret whether the corrected local clouds support a one-dimensional manifold 
 
 Run the section **“Validation 2: energy consistency of corrected states.”**
 
-Although the network was not trained on \(H(x,v)\), corrected points should lie closer to the constant-energy curve if the learned pullback is physically meaningful.
+Although the network was not trained on $H(x,v)$, corrected points should lie closer to the constant-energy curve if the learned pullback is physically meaningful.
 
 Record:
 
 | Diagnostic | Value |
 |---|---:|
-| Mean \(|H(\mathrm{noisy})-E_0|\) | |
-| Mean \(|H(\mathrm{corrected})-E_0|\) | |
+| Mean $\lvert H(\mathrm{noisy})-E_0\rvert$ | |
+| Mean $\lvert H(\mathrm{corrected})-E_0\rvert$ | |
 | Relative energy-error reduction | |
 | Mean correction/energy-normal alignment | |
 
@@ -372,7 +372,7 @@ Answer:
 
 ## Synthesis task
 
-Write a 300–500 interpretation addressing the following claim:
+Write a 300–500 word interpretation addressing the following claim:
 
 > The ANN has discovered the conservation law of the harmonic oscillator.
 
@@ -386,7 +386,7 @@ Change the oscillator data, noise scale, or network width. Investigate when the 
 
 # Activity 3: Supervised ML for Classifying Astronomical Objects
 
-**Notebook:** `Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb`
+**Notebook:** [`Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb`](Supervised_ML_Classifying-astronomical-objects_ANN_validated.ipynb)
 
 ## Case-study focus
 
@@ -398,7 +398,7 @@ The notebook uses photometric and morphology-related input features, including S
 
 After completing this activity, you should be able to:
 
-- describe an ANN classifier as a parameterized function \(f_\theta\) that maps measured astronomical features to class labels;
+- describe an ANN classifier as a parameterized function $f_\theta$ that maps measured astronomical features to class labels;
 - distinguish training, validation, and test data and explain why the test set must remain independent of model development;
 - interpret classification accuracy, balanced accuracy, macro F1-score, and the confusion matrix as complementary validation tools;
 - connect classification errors to astrophysical source properties, such as point-like versus extended morphology and optical/infrared color information;
@@ -523,7 +523,7 @@ Run the model-complexity or double-descent section. Compare how changing width a
 
 # Activity 4: Radioactive Decay Chain Modeling with a PINN
 
-**Notebook:** `Supervised_ML-chained-radioactive-decay_validated.ipynb`
+**Notebook:** [`Supervised_ML-chained-radioactive-decay_validated.ipynb`](Supervised_ML-chained-radioactive-decay_validated.ipynb)
 
 ## Case-study focus
 
@@ -548,7 +548,7 @@ The direct ANN learns from a small number of data points. The PINN additionally 
 After completing this activity, you should be able to:
 
 - describe the decay-chain equations as a physics-based model of coupled time evolution;
-- explain how a direct ANN represents a mapping \(t\mapsto (N_1,N_2,N_3)\);
+- explain how a direct ANN represents a mapping $t\mapsto (N_1,N_2,N_3)$;
 - explain how a PINN adds physical constraints through differential-equation residuals;
 - compare data-driven fitting with physics-informed fitting under sparse-data conditions;
 - evaluate model outputs using both numerical error and physical criteria such as residual size, extrapolation behavior, non-negativity, and total-population consistency;
@@ -559,8 +559,8 @@ After completing this activity, you should be able to:
 Answer:
 
 1. What physical process is represented by each term in the three differential equations?
-2. What should happen to \(N_1(t)\), \(N_2(t)\), and \(N_3(t)\) over time?
-3. Is the total population \(N_1+N_2+N_3\) conserved in this closed decay chain? Show this from the equations.
+2. What should happen to $N_1(t)$, $N_2(t)$, and $N_3(t)$ over time?
+3. Is the total population $N_1+N_2+N_3$ conserved in this closed decay chain? Show this from the equations.
 4. Why might a direct ANN trained on only a few points extrapolate poorly?
 
 ## Notebook workflow
@@ -573,7 +573,7 @@ $$
 \lambda_1=0.5,\qquad \lambda_2=0.3,
 $$
 
-with initial values \(N_1(0)=0.8\), \(N_2(0)=0.1\), and \(N_3(0)=0.5\). The reference solution is generated by numerical Euler integration over the training interval.
+with initial values $N_1(0)=0.8$, $N_2(0)=0.1$, and $N_3(0)=0.5$. The reference solution is generated by numerical Euler integration over the training interval.
 
 Record:
 
@@ -583,16 +583,16 @@ Record:
 | Extrapolation interval | |
 | Number of sparse observations | |
 | Number of physics collocation points | |
-| Initial total population \(N_1(0)+N_2(0)+N_3(0)\) | |
+| Initial total population $N_1(0)+N_2(0)+N_3(0)$ | |
 
 ### Step 2: Inspect the ANN architecture
 
-Run **“Define ANN.”** The model maps one input, time \(t\), to three outputs, \((N_1,N_2,N_3)\). The hidden layers use `tanh` activations.
+Run **“Define ANN.”** The model maps one input, time $t$, to three outputs, $(N_1,N_2,N_3)$. The hidden layers use `tanh` activations.
 
 Answer:
 
 1. Why is the output dimension three?
-2. What does it mean to treat the ANN as a parameterized function \(f_\theta(t)\)?
+2. What does it mean to treat the ANN as a parameterized function $f_\theta(t)$?
 3. Does the architecture itself enforce the decay equations, non-negativity, or conservation of total population?
 
 ### Step 3: Train the direct ANN
@@ -609,14 +609,20 @@ Answer:
 
 Run **“PINN.”** The PINN loss contains two parts:
 
-$\mathcal{L}_{\mathrm{PINN}} = \mathcal{L}_{\mathrm{data}} + \mathcal{L}_{\mathrm{ODE}},$
+$$
+\mathcal{L}_{\mathrm{PINN}}
+=
+\mathcal{L}_{\mathrm{data}}
++
+\mathcal{L}_{\mathrm{ODE}},
+$$
 
 where $\mathcal{L}_{\mathrm{ODE}}$ penalizes violations of the decay-chain equations.
 
 Answer:
 
-1. How are automatic derivatives used to compute \(dN_i/dt\)?
-2. What does each residual term \(r_1,r_2,r_3\) measure physically?
+1. How are automatic derivatives used to compute $dN_i/dt$?
+2. What does each residual term $r_1,r_2,r_3$ measure physically?
 3. Why can an ODE residual act as a learning bias?
 4. Does the PINN use physics as data, as architecture, or as a loss constraint?
 
@@ -643,10 +649,10 @@ Answer:
 
 Use the printed quantitative validation and plotted predictions to check:
 
-- whether \(N_1,N_2,N_3\) remain non-negative;
-- whether \(N_1+N_2+N_3\) remains approximately constant;
-- whether \(N_1\) decreases monotonically;
-- whether \(N_3\) increases monotonically in the modeled interval.
+- whether $N_1,N_2,N_3$ remain non-negative;
+- whether $N_1+N_2+N_3$ remains approximately constant;
+- whether $N_1$ decreases monotonically;
+- whether $N_3$ increases monotonically in the modeled interval.
 
 These checks are not merely numerical. They test whether the learned function respects qualitative physics.
 
