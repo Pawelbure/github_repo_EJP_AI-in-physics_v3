@@ -243,7 +243,7 @@ For a harmonic oscillator with mass $m$ and spring constant $c$, using the noteb
 
 $H(x,v)=\frac{1}{2}cx^2+\frac{1}{2}mv^2.$
 
-A trajectory at fixed energy forms a one-dimensional curve in the two-dimensional phase space. The ML task is therefore connected to the physical idea that conservation laws constrain the accessible states of a system to a lower-dimensional manifold.
+A trajectory at fixed energy forms a one-dimensional curve in the two-dimensional space. The ML task is therefore connected to the physical idea that conservation laws constrain the accessible states of a system to a lower-dimensional manifold.
 
 ## Learning goals
 
@@ -442,7 +442,7 @@ Run the ANN training cell. The model is a feed-forward multilayer perceptron wit
 Answer:
 
 1. Does the training error decrease?
-2. Does the held-out error decrease in the same way?
+2. Does the validation error decrease in the same way?
 3. Is there evidence of overfitting?
 4. What does the ANN learn mathematically: a physical law, a statistical association, or both? Explain.
 
